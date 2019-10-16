@@ -71,7 +71,6 @@ public class Logica implements Serializable {
         partidosList=new ArrayList<Partidos>(oListaPartidos);
 
         try {
-          //  ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("C:/Users/svillaverdel.EAD/Desktop/fichero/partidos.txt"));
             ObjectOutputStream fichero = new ObjectOutputStream(new FileOutputStream("./partidos.txt"));
             fichero.writeObject(partidosList);
             fichero.close();

@@ -57,8 +57,6 @@ public class DialogoPartido extends Stage {
         btnAceptar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //division = cbDivision.getSelectionModel().getSelectedItem().toString();
-                //Partidos partidoModificado = new Partidos(tfEquipoLocal.getText(), tfEquipoVisitante.getText(), division, tfResultado.getText(), dpFecha.getValue());
                 if (datosCorrectos()){
                     Partidos partidoModificado = new Partidos(tfEquipoLocal.getText(), tfEquipoVisitante.getText(), division, resultado, dpFecha.getValue());
                     Logica.getINSTANCE().modificarPartido(partidoModificado,indiceModificar);
@@ -134,23 +132,46 @@ public class DialogoPartido extends Stage {
         public boolean datosCorrectos(){
         boolean datosCorrectos = false;
 
-        if (tfEquipoLocal.getText().isEmpty())
-            System.out.println("Rellene el campo Equipo Local" );
+        if (tfEquipoLocal.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No se puede añadir el partido");
+            alert.setHeaderText("Todos los campos son necesarios");
+            alert.setContentText("Por favor, rellene el Equipo Local");
+            alert.show();
+        }
+
         else equipoLocal = tfEquipoLocal.getText();
 
-        if (tfEquipoVisitante.getText().isEmpty()) System.out.println("Rellene el campo Equipo Visitante");
+        if (tfEquipoVisitante.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No se puede añadir el partido");
+            alert.setHeaderText("Todos los campos son necesarios");
+            alert.setContentText("Por favor, rellene el campo Equipo Visitante");
+            alert.show();
+        }
             else equipoVisitante = tfEquipoVisitante.getText();
 
         if (cbDivision.getSelectionModel().getSelectedItem()!=null) division = cbDivision.getSelectionModel().getSelectedItem().toString();
-            else System.out.println("Por favor, escoja una división");
+            else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No se puede añadir el partido");
+            alert.setHeaderText("Todos los campos son necesarios");
+            alert.setContentText("Por favor, rellene la división");
+            alert.show();
+        };
 
         if (dpFecha.getValue()!=null) fechaPartido=dpFecha.getValue();
-            else System.out.println("Debe seleccionar una fecha del calendario");
+            else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No se puede añadir el partido");
+            alert.setHeaderText("Todos los campos son necesarios");
+            alert.setContentText("Por favor, rellene la fecha del partido");
+            alert.show();
+        };
 
         comprobarResultado();
 
-        if (equipoLocal !=null && equipoVisitante!=null && division!=null && resultado!=null && fechaPartido!=null) datosCorrectos = true;
-        else datosCorrectos = false;
+            datosCorrectos = equipoLocal != null && equipoVisitante != null && division != null && resultado != null && fechaPartido != null;
 
         return datosCorrectos;
         }
@@ -161,14 +182,27 @@ public class DialogoPartido extends Stage {
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(tfResultado.getText());
                 boolean correcto = matcher.find();
+
                 if (correcto){
                     resultado=tfResultado.getText();
                 } else {
-                    System.out.println("El resultado debe seguir el siguiente patron: num-num");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("No se puede añadir el partido");
+                    alert.setHeaderText("Formato incorrecto");
+                    alert.setContentText("Por favor, rellene el resultado siguiendo el patron: num-num");
+                    alert.show();
                 }
+            } else {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("No se puede añadir el partido");
+                alert.setHeaderText("Todos los campos son necesarios");
+                alert.setContentText("Por favor, rellene el resultado siguiendo el patron: num-num");
+                alert.show();
             }
 
-        }
+
+    }
 
 }
 

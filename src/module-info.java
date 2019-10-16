@@ -4,5 +4,4 @@ module pruebaInicial {
     exports pruebaInicial.Partidos.views;
     exports pruebaInicial.Partidos.logica;
     exports pruebaInicial.Partidos.models;
-    exports pruebaInicial.Partidos.utils;
 }
